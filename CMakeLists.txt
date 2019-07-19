@@ -1,8 +1,9 @@
-cmake_minimum_required (VERSION 3.5)
-project (mt CXX)
+cmake_minimum_required (VERSION 3.8)
+project (mt)
 
 # FIXME: clean up signed/unsigned comparisons and enable the warning.
-add_compile_options(-std=c++11 -pedantic -Wall -Werror -Wno-sign-compare)
+#add_compile_options(-std=c++11 -pedantic -Wall -Werror -Wno-sign-compare)
+#add_compile_options(-pedantic -Wall -Werror -Wno-sign-compare)
 add_definitions(-DVERSION=\"0.1\" -D_XOPEN_SOURCE=600)
 
 MESSAGE ( STATUS "Searching for X11..." )
@@ -18,23 +19,26 @@ If(NOT X11_FOUND)
   Message(STATUS "X11_INCLUDE_DIR: ${X11_INCLUDE_DIR}")
   Message(STATUS "X11_LIBRARIES: ${X11_LIBRARIES}")
   Message(FATAL_ERROR "libX11 and X11 headers must be installed.")
+  Message(FATAL_ERROR "In Ubundu 18.10 apt install libx11-dev")
 EndIf()
 
 If(NOT X11_Xft_FOUND)
   Message(STATUS "X11_Xft_INCLUDE_PATH: ${X11_Xft_INCLUDE_PATH}")
   Message(STATUS "X11_Xft_LIB: ${X11_Xft_LIB}")
   Message(FATAL_ERROR "libXft and Xft headers must be installed.")
+  Message(FATAL_ERROR "In Ubundu 18.10 apt install libxft-dev")
 EndIf()
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(FC REQUIRED fontconfig)
 pkg_check_modules(FT REQUIRED freetype2)
 
-include_directories(${FC_INCLUDE_DIRS} ${FT_INCLUDE_DIRS})
+include_directories(${FC_INCLUDE_DIRS} ${FT_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR})
 link_directories(${FC_LBIRARY_DIRS} ${FT_LIBRARY_DIRS})
 add_compile_options(${FC_CFLAGS} ${FT_CFLAGS})
 
-add_executable(mt mt.cc config.h mt.h x.h x.cc)
+add_executable(mt mt.cc config.h mt.h x.h x.cc easylogging++.cc)
+target_compile_features(mt PUBLIC cxx_std_11)
 target_link_libraries(mt -lm -lrt -lutil
                       ${X11_LIBRARIES} ${X11_Xft_LIB}
                       ${FC_LIBRARIES} ${FT_LIBRARIES})

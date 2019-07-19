@@ -20,6 +20,10 @@ tools that make it easier to work with.
 You will need the Xlib header files, CMake, and a modern C++ toolchain. Using
 the Ninja generator of CMake is encouraged.
 
+## ubundu 
+
+sudo apt-get install libx11-dev libfontconfig1-dev libxft-dev
+
 # TODO list
 
 ## Cleanup

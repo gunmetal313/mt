@@ -1,3 +1,5 @@
+#include <easylogging++.h>
+INITIALIZE_EASYLOGGINGPP
 #include "x.h"
 
 #include <algorithm>
@@ -1386,6 +1388,7 @@ void focus(XEvent *ev) {
 }
 
 void kpress(XEvent *ev) {
+  LOG(INFO) << "kpress(XEvent *ev) <<";
   XKeyEvent *e = &ev->xkey;
   KeySym ksym;
   char buf[32];
@@ -1428,7 +1431,10 @@ void kpress(XEvent *ev) {
       len = 2;
     }
   }
+
   ttysend(buf, len);
+  LOG(INFO) << buf;
+  LOG(INFO) << "kpress(XEvent *ev) >>";
 }
 
 void cmessage(XEvent *e) {
@@ -1561,6 +1567,8 @@ void run(void) {
 }
 
 int main(int argc, char *argv[]) {
+  el::Loggers::reconfigureAllLoggers(el::ConfigurationType::ToStandardOutput, "false");
+  LOG(INFO) << "Logger was started";
   xw.l = xw.t = 0;
   xw.isfixed = False;
   win.cursor = cursorshape;
