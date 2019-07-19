@@ -1,6 +1,7 @@
 // Font specification in fontconfig format.
 // See http://freedesktop.org/software/fontconfig/fontconfig-user.html
-char font[] = "RobotoMono Nerd Font:weight=Light:size=11:antialias=true:autohint=true";
+//example "Monospace Regular:weight=Light:size=11:antialias=true:autohint=true"
+char font[] = "Ubuntu Mono:size=14";
 
 // Margin between window edges and console area.
 int borderpx = 2;
